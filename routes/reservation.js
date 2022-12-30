@@ -57,39 +57,30 @@ router.post('/add-reservation',async(req,res)=>{
  })
 
  async function sendMail (){
-    var transport = nodemailer.createTransport({
-      host: "smtp.mailtrap.io",
-      port: 2525,
-      auth: {
-        user: "a0a5b5be0b6aa0",
-        pass: "562d84956f3eb9"
-      }
-    });
-
-    let mailOptions = {
-      from: "taxi-services",
-      to: "adnan@taxiservices.fr",
-      subject: "Taxi services ,réservation",
-      html: `
-                  <html style="margin: 0; padding: 0;">
-                    <head>
-                      <title>Taxi services </title>
-                    </head>
-                    <body style="margin: 0; padding: 0;">
-                        <div style="margin: 10px auto; padding-left: 32px;">
-                        <p style="color: black;">nouvelle réservation</p>
-                        </div>
-                    </body>
-                         
-                  </html>
-                      `,
-    };
-
-    transport.sendMail(mailOptions, (err, data) => {
-      if (err) {
-        return res.status(400).send(err);
-      }
-    });
+  let transport = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    service: 'gmail',
+    secure: false,
+    auth: {
+      user: 'adtaxi92@gmail.com',
+      pass: 'njscmapqgcimoavo'
+    }
+  });
+  
+  // Define the email options
+  let mailOptions = {
+    from: '"adnan-taxi-service" adtaxi92@gmail.com',
+    to: 'servicetaxiste@gmail.com',
+    subject: 'Réservation',
+    text: 'Vous avez reçu une réservation',
+    html: '<p>Vous avez reçu une réservation.</p>'
+  };
+  
+  // Send the email
+  transport.sendMail(mailOptions, (err, data) => {
+    if (err) {
+      return res.status(400).send(err);
+    }
+  }); 
 }
-
  module.exports=router
